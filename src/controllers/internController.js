@@ -1,7 +1,6 @@
 const internModel = require("../models/internModel");
 const collegeModel = require("../models/collegeModel");
 const {
-  isValidId,
   isValidString,
   isValidMobileNum,
   isValidEmail,
@@ -12,32 +11,43 @@ const createintern = async function (req, res) {
     let data = req.body;
     let { name, email, mobile, collegeName } = data;
 
+    if (Object.keys(data).length == 0) {
+      return res
+        .status(400)
+        .send({ status: false, message: "Data not found in body" });
+    }
     if (!name) {
       res.status(400).send({ status: true, message: "name is required" });
     }
-
     if (!isValidString(name)) {
       res.status(400).send({ status: true, message: "Invalid name" });
     }
-
     if (!email) {
       res.status(400).send({ status: true, message: "email is required" });
     }
-
     if (!isValidEmail(email)) {
       res.status(400).send({ status: true, message: "Invalid Email" });
     }
-
+    const internsEmail = await internModel.findOne({ email: email });
+    if (internsEmail) {
+      return res
+        .status(400)
+        .send({ status: false, message: "email must be unique" });
+    }
     if (!mobile) {
       res.status(400).send({ status: true, message: "mobile is required" });
     }
-
     if (!isValidMobileNum(mobile)) {
       return res
         .status(400)
         .send({ status: false, msg: "Not a valid mobile number" });
     }
-
+    const internsMobile = await internModel.findOne({ mobile: mobile });
+    if (internsMobile) {
+      return res
+        .status(400)
+        .send({ status: false, message: "mobile must be unique" });
+    }
     const college = await collegeModel.findOne({ name: collegeName });
     const collegId = college._id;
     const interndata = await internModel.create({
@@ -54,25 +64,34 @@ const createintern = async function (req, res) {
 };
 //..........................................................GET API..............................................................................
 
-exports.getInterns = async (req, res) => {
-  let query = req.query.collegeName;
-  let filteredData = await collegeModel.findOne({ name: query });
-
-  let collegeFullName = filteredData.fullName;
-  const collegeId = filteredData._id;
-  const collegeLogo = filteredData.logoLink;
-
+const getInterns = async (req, res) => {
+  let name = req.query.collegeName;
+  if (!name) {
+    return res
+      .status(400)
+      .send({ status: false, message: "collegeName is required" });
+  }
+  let filteredData = await collegeModel.findOne({ name: name });
+  if (!filteredData) {
+    return res
+      .status(404)
+      .send({ status: false, message: "college not exists" });
+  }
+  const { fullName, _id, logoLink } = filteredData;
+  
   const internData = await internModel
-    .find({ collegeId: collegeId })
+    .find({ collegeId: _id })
     .select({ _id: 1, name: 1, email: 1, mobile: 1 });
-  res.status(200).send({
+
+  return res.status(200).send({
     status: true,
     data: {
-      name: query,
-      fullName: collegeFullName,
-      logoLink: collegeLogo,
+      name: name,
+      fullName: fullName,
+      logoLink: logoLink,
       interns: internData,
     },
   });
 };
-module.exports.createintern = createintern;
+
+module.exports = { createintern, getInterns };

@@ -6,17 +6,10 @@ const isValidId = function (id) {
 };
 
 /*****************************String Validation**************************************/
-
 const isValidString = function (value) {
   if (typeof value === "undefined" || value === null) return false;
   if (typeof value === "string" && value.trim().length === 0) return false;
   return true;
-};
-
-/*****************************Request Body Validation**************************************/
-
-const isValidRequestBody = function (requestBody) {
-  return Object.keys(requestBody).length > 0;
 };
 
 /*****************************Mobile Number Validation**************************************/
@@ -42,7 +35,6 @@ const isValidEmail = function (emailId) {
 module.exports = {
   isValidId,
   isValidString,
-  isValidRequestBody,
   isValidMobileNum,
   isValidEmail,
 };

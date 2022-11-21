@@ -1,6 +1,6 @@
 const collegeModel = require("../models/collegeModel");
 
-let { isValidId, isValidString} = require("../validators/validator")
+let { isValidString } = require("../validators/validator");
 
 const createCollege = async function (req, res) {
   try {
@@ -16,12 +16,10 @@ const createCollege = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "name is required" });
-    if(!isValidString(name)){
-        return res.status().send({status : false , message : "name is not valid"})
+    if (!isValidString(name)) {
+      return res.status().send({ status: false, message: "name is not valid" });
     }
-
-    const find1 = await collegeModel.find({name:name});
-
+    const find1 = await collegeModel.find({ name: name });
     if (find1.length > 0) {
       return res
         .status(400)
@@ -31,9 +29,11 @@ const createCollege = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "fullName is required" });
-    if(!isValidString(fullName)){
-            return res.status().send({status : false , message : "fullName is not valid"})
-        }
+    if (!isValidString(fullName)) {
+      return res
+        .status()
+        .send({ status: false, message: "fullName is not valid" });
+    }
     if (!logoLink)
       return res
         .status(400)
