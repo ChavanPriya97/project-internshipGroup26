@@ -1,6 +1,6 @@
+const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const { default: mongoose } = require("mongoose");
 const route = require("./routes/route");
 const app = express();
 
@@ -9,11 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose
   .connect(
-    "mongodb+srv://project2_intershipGroup:project2@cluster0.xvahxxz.mongodb.net/Group25Database",
+    "mongodb+srv://group22:1234@group22databse.uvtoalh.mongodb.net/group25Database",
     { useNewUrlParser: true }
   )
   .then(() => console.log("Project2 mongoDB is connected"))
-  .catch((err) => console.log({ error: err.message }));
+  .catch(err => console.log(err));
 
 app.use("/", route);
 
