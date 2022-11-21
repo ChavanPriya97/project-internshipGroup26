@@ -10,15 +10,14 @@ const createCollege = async function (req, res) {
         .status(400)
         .send({ status: false, message: "Data not found in body" });
     }
-
     if (!name)
       return res
         .status(400)
         .send({ status: false, message: "name is required" });
 
-    const find = await collegeModel.find(name);
+    const find1 = await collegeModel.find({name:name});
 
-    if (find.length > 0) {
+    if (find1.length > 0) {
       return res
         .status(400)
         .send({ status: false, message: "This name is already exists" });
