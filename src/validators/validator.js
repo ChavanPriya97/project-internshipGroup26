@@ -13,42 +13,36 @@ const isValidString = function (value) {
   return true;
 };
 
-/////////////////////////////////////////////////////////////////////
-
-
-const isValid = function (value) {
-    if (typeof value === 'undefined' || value === null) return false
-    if (typeof value === 'string' && value.trim().length === 0) return false 
-    return true;
-}
-
+/*****************************Request Body Validation**************************************/
 
 const isValidRequestBody = function (requestBody) {
-    return Object.keys(requestBody).length > 0;
-}
+  return Object.keys(requestBody).length > 0;
+};
 
-
+/*****************************Mobile Number Validation**************************************/
 const isValidMobileNum = function (value) {
-    if (!(/^(\+\d{1,3}[- ]?)?\d{10}$/.test(value.trim()))) {
-        return false
-    }
-    return true
-}
+  if (!/^(\+\d{1,3}[- ]?)?\d{10}$/.test(value.trim())) {
+    return false;
+  }
+  return true;
+};
 
+/*****************************Email Validation**************************************/
 
-const isValidSyntaxOfEmail = function (value) {
-    if (!(validator.validate(value))) {
-        return false
-    }
-    return true
-}
+const isValidEmail = function (emailId) {
+  let emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (emailRegex.test(emailId)) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-
-
-module.exports.isValid = isValid
-module.exports.isValidRequestBody = isValidRequestBody
-module.exports.isValidMobileNum = isValidMobileNum
-module.exports.isValidSyntaxOfEmail = isValidSyntaxOfEmail
-
-
-module.exports = { isValidId, isValidString};
+module.exports = {
+  isValidId,
+  isValidString,
+  isValidRequestBody,
+  isValidMobileNum,
+  isValidEmail,
+};
