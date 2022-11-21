@@ -31,6 +31,11 @@ const createintern = async function (req, res) {
     if (!mobile) {
       res.status(400).send({ status: true, message: "mobile is required" });
     }
+    if (!validator.isValid(mobile)){ return res.status(400).send({ status: false, msg: "Mobile No. is required" })}
+
+    if (!(/^([+]\d{2})?\d{10}$/.test(data.mobile))){
+      return res.status(400).send({ status:false, msg: 'Not a valid mobile number'})
+ }
 
     const college = await collegeModel.findOne({ name: collegeName });
     const collegId = college._id;
