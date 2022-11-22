@@ -95,7 +95,10 @@ const getInterns = async function (req, res) {
       .status(400)
       .send({ status: false, message: "collegeName is required" });
   }
-  let filteredData = await collegeModel.findOne({ name: name });
+  let filteredData = await collegeModel.findOne({
+    name: name,
+    isDeleted: false,
+  });
   if (!filteredData) {
     return res
       .status(404)
@@ -104,7 +107,7 @@ const getInterns = async function (req, res) {
   const { fullName, _id, logoLink } = filteredData;
 
   const internData = await internModel
-    .find({ collegeId: _id })
+    .find({ collegeId: _id, isDeleted: false })
     .select({ _id: 1, name: 1, email: 1, mobile: 1 });
 
   return res.status(200).send({
