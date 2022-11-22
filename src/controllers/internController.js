@@ -86,10 +86,10 @@ const createintern = async function (req, res) {
   }
 };
 
-/************************************get  Interns and college details ************************************ */
+/************************************get  Interns and college details *************************************/
 
 const getInterns = async function (req, res) {
-  let name = req.query.collegeName;
+ try{ let name = req.query.collegeName;
   if (!name) {
     return res
       .status(400)
@@ -118,7 +118,11 @@ const getInterns = async function (req, res) {
       logoLink: logoLink,
       interns: internData,
     },
-  });
+  })
+}
+catch (error) {
+  return res.status(500).send({ status: false, message: error.message });
+}
 };
 
 module.exports = { createintern, getInterns };
