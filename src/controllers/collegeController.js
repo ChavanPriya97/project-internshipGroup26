@@ -18,7 +18,7 @@ const createCollege = async function (req, res) {
         .status(400)
         .send({ status: false, message: "name is required" });
     if (!isValidString(name)) {
-      return res.status().send({ status: false, message: "name is not valid" });
+      return res.status(400).send({ status: false, message: "name is not valid" });
     }
     const find1 = await collegeModel.find({ name: name });
     if (find1.length > 0) {
@@ -32,7 +32,7 @@ const createCollege = async function (req, res) {
         .send({ status: false, message: "fullName is required" });
     if (!isValidString(fullName)) {
       return res
-        .status()
+        .status(400)
         .send({ status: false, message: "fullName is not valid" });
     }
     if (!logoLink)

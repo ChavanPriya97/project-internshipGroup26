@@ -19,16 +19,16 @@ const createintern = async function (req, res) {
         .send({ status: false, message: "Data not found in body" });
     }
     if (!name) {
-      res.status(400).send({ status: true, message: "name is required" });
+      return res.status(400).send({ status: true, message: "name is required" });
     }
     if (!isValidString(name)) {
-      res.status(400).send({ status: true, message: "Invalid name" });
+      return res.status(400).send({ status: true, message: "Invalid name" });  
     }
     if (!email) {
-      res.status(400).send({ status: true, message: "email is required" });
+      return res.status(400).send({ status: true, message: "email is required" });
     }
     if (!isValidEmail(email)) {
-      res.status(400).send({ status: true, message: "Invalid Email" });
+       return res.status(400).send({ status: true, message: "Invalid Email" });
     }
     const internsEmail = await internModel.findOne({ email: email });
     if (internsEmail) {
@@ -37,7 +37,7 @@ const createintern = async function (req, res) {
         .send({ status: false, message: "email must be unique" });
     }
     if (!mobile) {
-      res.status(400).send({ status: true, message: "mobile is required" });
+      return res.status(400).send({ status: true, message: "mobile is required" });
     }
     if (!isValidMobileNum(mobile)) {
       return res
