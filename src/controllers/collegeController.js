@@ -1,6 +1,7 @@
 const collegeModel = require("../models/collegeModel");
-
 let { isValidString } = require("../validators/validator");
+
+/************************************Create College ************************************ */
 
 const createCollege = async function (req, res) {
   try {

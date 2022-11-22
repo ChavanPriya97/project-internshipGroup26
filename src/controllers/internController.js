@@ -6,6 +6,8 @@ const {
   isValidEmail,
 } = require("../validators/validator");
 
+/************************************Create Interns ************************************ */
+
 const createintern = async function (req, res) {
   try {
     let data = req.body;
@@ -62,9 +64,10 @@ const createintern = async function (req, res) {
     return res.status(500).send({ status: false, message: error.message });
   }
 };
-//..........................................................GET API..............................................................................
 
-const getInterns = async (req, res) => {
+/************************************get  Interns and college details ************************************ */
+
+const getInterns = async function (req, res) {
   let name = req.query.collegeName;
   if (!name) {
     return res
@@ -78,7 +81,7 @@ const getInterns = async (req, res) => {
       .send({ status: false, message: "college not exists" });
   }
   const { fullName, _id, logoLink } = filteredData;
-  
+
   const internData = await internModel
     .find({ collegeId: _id })
     .select({ _id: 1, name: 1, email: 1, mobile: 1 });
