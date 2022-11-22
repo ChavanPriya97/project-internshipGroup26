@@ -19,16 +19,20 @@ const createintern = async function (req, res) {
         .send({ status: false, message: "Data not found in body" });
     }
     if (!name) {
-      return res.status(400).send({ status: true, message: "name is required" });
+      return res
+        .status(400)
+        .send({ status: true, message: "name is required" });
     }
     if (!isValidString(name)) {
-      return res.status(400).send({ status: true, message: "Invalid name" });  
+      return res.status(400).send({ status: true, message: "Invalid name" });
     }
     if (!email) {
-      return res.status(400).send({ status: true, message: "email is required" });
+      return res
+        .status(400)
+        .send({ status: true, message: "email is required" });
     }
     if (!isValidEmail(email)) {
-       return res.status(400).send({ status: true, message: "Invalid Email" });
+      return res.status(400).send({ status: true, message: "Invalid Email" });
     }
     const internsEmail = await internModel.findOne({ email: email });
     if (internsEmail) {
@@ -37,7 +41,9 @@ const createintern = async function (req, res) {
         .send({ status: false, message: "email must be unique" });
     }
     if (!mobile) {
-      return res.status(400).send({ status: true, message: "mobile is required" });
+      return res
+        .status(400)
+        .send({ status: true, message: "mobile is required" });
     }
     if (!isValidMobileNum(mobile)) {
       return res
@@ -52,12 +58,20 @@ const createintern = async function (req, res) {
     }
 
     if (!collegeName) {
-      return res.status(400).send({ status: true, message: "collegeName is required" });
+      return res
+        .status(400)
+        .send({ status: true, message: "collegeName is required" });
     }
-    const college = await collegeModel.findOne({ name: collegeName });
-    if(!college){
-      return res.status(400).send({status : false ,message : "college not found"})
+    const college = await collegeModel.findOne({
+      name: collegeName,
+      isDeleted: false,
+    });
+    if (!college) {
+      return res
+        .status(400)
+        .send({ status: false, message: "college not found" });
     }
+
     const collegId = college._id;
     const interndata = await internModel.create({
       name: name,
