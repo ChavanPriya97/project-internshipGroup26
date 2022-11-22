@@ -41,7 +41,7 @@ const createCollege = async function (req, res) {
         .send({ status: false, message: "logoLink is required" });
 
     const created = await collegeModel.create(data);
-    return res.status(201).send({ status: true, data: created });
+    return res.status(201).send({ status: true, message: "College created successfully",data: created });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }

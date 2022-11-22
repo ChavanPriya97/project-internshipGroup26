@@ -80,7 +80,7 @@ const createintern = async function (req, res) {
       collegeId: collegId,
     });
 
-    return res.status(201).send({ status: true, data: interndata });
+    return res.status(201).send({ status: true, message: "Intern created successfully",data: interndata });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
