@@ -21,18 +21,18 @@ const createintern = async function (req, res) {
     if (!name) {
       return res
         .status(400)
-        .send({ status: true, message: "name is required" });
+        .send({ status: false, message: "name is required" });
     }
     if (!isValidString(name)) {
-      return res.status(400).send({ status: true, message: "Invalid name" });
+      return res.status(400).send({ status: false, message: "Invalid name" });
     }
     if (!email) {
       return res
         .status(400)
-        .send({ status: true, message: "email is required" });
+        .send({ status: false, message: "email is required" });
     }
     if (!isValidEmail(email)) {
-      return res.status(400).send({ status: true, message: "Invalid Email" });
+      return res.status(400).send({ status: false, message: "Invalid Email" });
     }
     const internsEmail = await internModel.findOne({ email: email });
     if (internsEmail) {
@@ -43,7 +43,7 @@ const createintern = async function (req, res) {
     if (!mobile) {
       return res
         .status(400)
-        .send({ status: true, message: "mobile is required" });
+        .send({ status: false, message: "mobile is required" });
     }
     if (!isValidMobileNum(mobile)) {
       return res
@@ -60,7 +60,7 @@ const createintern = async function (req, res) {
     if (!collegeName) {
       return res
         .status(400)
-        .send({ status: true, message: "collegeName is required" });
+        .send({ status: false, message: "collegeName is required" });
     }
     const college = await collegeModel.findOne({
       name: collegeName,
@@ -89,40 +89,40 @@ const createintern = async function (req, res) {
 /************************************get  Interns and college details *************************************/
 
 const getInterns = async function (req, res) {
- try{ let name = req.query.collegeName;
-  if (!name) {
-    return res
-      .status(400)
-      .send({ status: false, message: "collegeName is required" });
-  }
-  let filteredData = await collegeModel.findOne({
-    name: name,
-    isDeleted: false,
-  });
-  if (!filteredData) {
-    return res
-      .status(404)
-      .send({ status: false, message: "college not exists" });
-  }
-  const { fullName, _id, logoLink } = filteredData;
-
-  const internData = await internModel
-    .find({ collegeId: _id, isDeleted: false })
-    .select({ _id: 1, name: 1, email: 1, mobile: 1 });
-
-  return res.status(200).send({
-    status: true,
-    data: {
+  try {
+    let name = req.query.collegeName;
+    if (!name) {
+      return res
+        .status(400)
+        .send({ status: false, message: "collegeName is required" });
+    }
+    let filteredData = await collegeModel.findOne({
       name: name,
-      fullName: fullName,
-      logoLink: logoLink,
-      interns: internData,
-    },
-  })
-}
-catch (error) {
-  return res.status(500).send({ status: false, message: error.message });
-}
+      isDeleted: false,
+    });
+    if (!filteredData) {
+      return res
+        .status(404)
+        .send({ status: false, message: "college not exists" });
+    }
+    const { fullName, _id, logoLink } = filteredData;
+
+    const internData = await internModel
+      .find({ collegeId: _id, isDeleted: false })
+      .select({ _id: 1, name: 1, email: 1, mobile: 1 });
+
+    return res.status(200).send({
+      status: true,
+      data: {
+        name: name,
+        fullName: fullName,
+        logoLink: logoLink,
+        interns: internData,
+      },
+    });
+  } catch (error) {
+    return res.status(500).send({ status: false, message: error.message });
+  }
 };
 
 module.exports = { createintern, getInterns };
