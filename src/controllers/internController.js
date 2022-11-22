@@ -50,7 +50,14 @@ const createintern = async function (req, res) {
         .status(400)
         .send({ status: false, message: "mobile must be unique" });
     }
+
+    if (!collegeName) {
+      return res.status(400).send({ status: true, message: "collegeName is required" });
+    }
     const college = await collegeModel.findOne({ name: collegeName });
+    if(!college){
+      return res.status(400).send({status : false ,message : "college not found"})
+    }
     const collegId = college._id;
     const interndata = await internModel.create({
       name: name,
