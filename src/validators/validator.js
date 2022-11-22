@@ -6,13 +6,20 @@ const isValidId = function (id) {
 };
 
 /*****************************String Validation**************************************/
-const isValidString = function (value) {
+const isValidString1 = function (value) {
   if (typeof value === "undefined" || value === null) return false;
   if (typeof value === "string" && value.trim().length === 0) return false;
   if (! /^[a-z][a-z ]+[a-z]$/.test(value)) return false;
   return true;
 };
 
+
+const isValidString2 = function (value) {
+  if (typeof value === "undefined" || value === null) return false;
+  if (typeof value === "string" && value.trim().length === 0) return false;
+  if (! /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/.test(value)) return false;
+  return true;
+};
 /*****************************Mobile Number Validation**************************************/
 const isValidMobileNum = function (value) {
   if (!/^(\+\d{1,3}[- ]?)?\d{10}$/.test(value.trim())) {
@@ -35,7 +42,8 @@ const isValidEmail = function (emailId) {
 
 module.exports = {
   isValidId,
-  isValidString,
+  isValidString1,
+  isValidString2,
   isValidMobileNum,
   isValidEmail,
 };

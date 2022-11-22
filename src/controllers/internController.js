@@ -1,7 +1,7 @@
 const internModel = require("../models/internModel");
 const collegeModel = require("../models/collegeModel");
 const {
-  isValidString,
+  isValidString2,
   isValidMobileNum,
   isValidEmail,
 } = require("../validators/validator");
@@ -23,7 +23,7 @@ const createintern = async function (req, res) {
         .status(400)
         .send({ status: false, message: "name is required" });
     }
-    if (!isValidString(name)) {
+    if (!isValidString2(name)) {
       return res.status(400).send({ status: false, message: "Invalid name" });
     }
     if (!email) {
