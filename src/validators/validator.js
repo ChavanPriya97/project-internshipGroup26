@@ -13,7 +13,6 @@ const isValidString1 = function (value) {
 const isValidString2 = function (value) {
   if (typeof value === "undefined" || value === null) return false;
   if (typeof value === "string" && value.trim().length === 0) return false;
-  // if (! /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/.test(value)) return false;
   return true;
 };
 /*****************************Mobile Number Validation**************************************/
