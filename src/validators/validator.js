@@ -1,9 +1,5 @@
 const { default: mongoose } = require("mongoose");
 
-/*****************************ObjectId Validation**************************************/
-const isValidId = function (id) {
-  return mongoose.Types.ObjectId.isValid(id);
-};
 
 /*****************************String Validation**************************************/
 const isValidString1 = function (value) {
@@ -17,7 +13,7 @@ const isValidString1 = function (value) {
 const isValidString2 = function (value) {
   if (typeof value === "undefined" || value === null) return false;
   if (typeof value === "string" && value.trim().length === 0) return false;
-  if (! /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/.test(value)) return false;
+  // if (! /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/.test(value)) return false;
   return true;
 };
 /*****************************Mobile Number Validation**************************************/
@@ -46,7 +42,6 @@ return nameRegex.test(logoLink);
 
 
 module.exports = {
-  isValidId,
   isValidString1,
   isValidString2,
   isValidMobileNum,

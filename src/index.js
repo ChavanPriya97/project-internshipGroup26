@@ -16,6 +16,6 @@ mongoose
 
 app.use("/", route);
 
-app.listen(process.env.PORT || 5000, function () {
-  console.log("express run on server " + (process.env.PORT || 5000));
+app.listen(process.env.PORT || 3000, function () {
+  console.log("express run on server " + (process.env.PORT || 3000));
 });
