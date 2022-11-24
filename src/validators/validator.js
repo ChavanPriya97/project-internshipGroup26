@@ -17,11 +17,12 @@ const isValidString1 = function (value) {
 const isValidString2 = function (value) {
   if (typeof value === "undefined" || value === null) return false;
   if (typeof value === "string" && value.trim().length === 0) return false;
+  if (! /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/.test(value)) return false;
   return true;
 };
 /*****************************Mobile Number Validation**************************************/
 const isValidMobileNum = function (value) {
-  if (!/^(\+\d{1,3}[- ]?)?\d{10}$/.test(value.trim())) {
+  if (!/^[0-9]\d{9}$/.test(value.trim())) {
     return false;
   }
   return true;
@@ -30,14 +31,19 @@ const isValidMobileNum = function (value) {
 /*****************************Email Validation**************************************/
 
 const isValidEmail = function (emailId) {
-  let emailRegex =
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let emailRegex =/^[a-z0-9_]{2,}@[a-z]{3,}.[com]{3}$/;
   if (emailRegex.test(emailId)) {
     return true;
   } else {
     return false;
   }
 };
+/*******************************Logo Validation********************************************/
+const isValidLogo = (logoLink) => {
+  const nameRegex = /^(http[s]?:\/\/.*\.(?:png|jpeg))$/;
+return nameRegex.test(logoLink);
+};
+
 
 module.exports = {
   isValidId,
@@ -45,4 +51,5 @@ module.exports = {
   isValidString2,
   isValidMobileNum,
   isValidEmail,
+  isValidLogo,
 };

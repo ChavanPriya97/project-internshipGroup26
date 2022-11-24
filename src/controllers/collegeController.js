@@ -1,5 +1,5 @@
 const collegeModel = require("../models/collegeModel");
-let { isValidString1,isValidString2 } = require("../validators/validator");
+let { isValidString1,isValidString2, isValidLogo } = require("../validators/validator");
 
 /************************************Create College ************************************ */
 
@@ -20,12 +20,9 @@ const createCollege = async function (req, res) {
     if (!isValidString1(name)) {
       return res.status(400).send({ status: false, message: "name is not valid" });
     }
-    const find1 = await collegeModel.find({ name: name });
-    if (find1.length > 0) {
-      return res
-        .status(400)
-        .send({ status: false, message: "This name is already exists" });
-    }
+    const find1 = await collegeModel.findOne({ name:name })
+    if(find1)
+    {return res.status(400).send({status:false, message:"name already exists"})}
     if (!fullName)
       return res
         .status(400)
@@ -39,6 +36,11 @@ const createCollege = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "logoLink is required" });
+    if(!isValidLogo(logoLink)){
+      return res
+      .status(400)
+      .send({status: false, message: "logo link is not valid"})
+    }    
 
     const created = await collegeModel.create(data);
     return res.status(201).send({ status: true, message: "College created successfully",data: created });
