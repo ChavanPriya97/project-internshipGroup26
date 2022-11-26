@@ -9,6 +9,7 @@ const {
 /************************************Create Interns ************************************ */
 
 const createintern = async function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     let data = req.body;
     let { name, email, mobile, collegeName } = data;
@@ -80,7 +81,13 @@ const createintern = async function (req, res) {
       collegeId: collegId,
     });
 
-    return res.status(201).send({ status: true, message: "Intern created successfully",data: interndata });
+    return res
+      .status(201)
+      .send({
+        status: true,
+        message: "Intern created successfully",
+        data: interndata,
+      });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
@@ -89,6 +96,7 @@ const createintern = async function (req, res) {
 /************************************get  Interns and college details *************************************/
 
 const getInterns = async function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     let name = req.query.collegeName;
     if (!name) {

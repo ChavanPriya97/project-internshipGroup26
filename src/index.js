@@ -3,7 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const route = require("./routes/route");
 const app = express();
+const multer = require("multer");
 
+app.use(multer().any());
 app.use(bodyParser.json());
 
 mongoose
@@ -12,10 +14,10 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => console.log("Project2 mongoDB is connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.use("/", route);
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log("express run on server " + (process.env.PORT || 3000));
+app.listen(process.env.PORT || 3001, function () {
+  console.log("express run on server " + (process.env.PORT || 3001));
 });
